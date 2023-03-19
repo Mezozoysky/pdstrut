@@ -1,0 +1,3 @@
+# pdstrut
+Simple string utils
+
