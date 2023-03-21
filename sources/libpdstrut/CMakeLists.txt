@@ -16,7 +16,7 @@ set_target_properties(${PROJECT_NAME}
     OUTPUT_NAME pdstrut
     )
 target_link_libraries(${PROJECT_NAME}
-    INTERFACE
+    PUBLIC
     PDSTRUT::common
     )
 target_include_directories(${PROJECT_NAME}

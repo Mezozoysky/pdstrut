@@ -6,6 +6,7 @@
 using namespace pd::strut;
 using namespace std::literals;
 
+#if defined(PDSTRUT_CHAR_CHAR)
 TEST_CASE("is_whitespace char tests", "[strut][is_whitespace][char][basic]")
 {
     char ch_new{'\n'};
@@ -59,7 +60,9 @@ TEST_CASE("is_whitespace uchar tests", "[strut][is_whitespace][uchar][basic]")
     REQUIRE(!is_whitespace(ch_under));
     REQUIRE(!is_whitespace(ch_punkt));
 }
+#endif
 
+#if defined(PDSTRUT_CHAR_WCHAR)
 TEST_CASE("is_whitespace wchar_t tests", "[strut][is_whitespace][wchar_t][basic]")
 {
     char ch_new{L'\n'};
@@ -86,7 +89,9 @@ TEST_CASE("is_whitespace wchar_t tests", "[strut][is_whitespace][wchar_t][basic]
     REQUIRE(!is_whitespace(ch_under));
     REQUIRE(!is_whitespace(ch_punkt));
 }
+#endif
 
+#if defined(PDSTRUT_CHAR_U16CHAR)
 TEST_CASE("is_whitespace char16_t tests", "[strut][is_whitespace][char16_t][basic]")
 {
     uchar ch_new{u'\n'};
@@ -113,7 +118,9 @@ TEST_CASE("is_whitespace char16_t tests", "[strut][is_whitespace][char16_t][basi
     REQUIRE(!is_whitespace(ch_under));
     REQUIRE(!is_whitespace(ch_punkt));
 }
+#endif
 
+#if defined(PDSTRUT_CHAR_U32CHAR)
 TEST_CASE("is_whitespace char32_t tests", "[strut][is_whitespace][char32_t][basic]")
 {
     char ch_new{U'\n'};
@@ -140,8 +147,10 @@ TEST_CASE("is_whitespace char32_t tests", "[strut][is_whitespace][char32_t][basi
     REQUIRE(!is_whitespace(ch_under));
     REQUIRE(!is_whitespace(ch_punkt));
 }
+#endif
 
 
+#if defined(PDSTRUT_CHAR_CHAR)
 TEST_CASE("ltrim_in string tests", "[strut][ltrim_in][string][basic]")
 {
     std::string str{"abc"s};
@@ -164,7 +173,9 @@ TEST_CASE("ltrim_in string tests", "[strut][ltrim_in][string][basic]")
     ltrim_in(str);
     REQUIRE(str == ""s);
 }
+#endif
 
+#if defined(PDSTRUT_CHAR_WCHAR)
 TEST_CASE("ltrim_in wstring tests", "[strut][ltrim_in][wstring][basic]")
 {
     std::wstring str{L"abc"s};
@@ -187,7 +198,9 @@ TEST_CASE("ltrim_in wstring tests", "[strut][ltrim_in][wstring][basic]")
     ltrim_in(str);
     REQUIRE(str == L""s);
 }
+#endif
 
+#if defined(PDSTRUT_CHAR_U16CHAR)
 TEST_CASE("ltrim_in u16string tests", "[strut][ltrim_in][u16string][basic]")
 {
     std::u16string str{u"abc"s};
@@ -210,7 +223,9 @@ TEST_CASE("ltrim_in u16string tests", "[strut][ltrim_in][u16string][basic]")
     ltrim_in(str);
     REQUIRE(str == u""s);
 }
+#endif
 
+#if defined(PDSTRUT_CHAR_U32CHAR)
 TEST_CASE("ltrim_in u32string tests", "[strut][ltrim_in][u32string][basic]")
 {
     std::u32string str{U"abc"s};
@@ -233,7 +248,9 @@ TEST_CASE("ltrim_in u32string tests", "[strut][ltrim_in][u32string][basic]")
     ltrim_in(str);
     REQUIRE(str == U""s);
 }
+#endif
 
+#if defined(PDSTRUT_CHAR_CHAR)
 TEST_CASE("rtrim_in string tests", "[strut][rtrim_in][string][basic]")
 {
     std::string str{"abc"s};
@@ -256,7 +273,9 @@ TEST_CASE("rtrim_in string tests", "[strut][rtrim_in][string][basic]")
     rtrim_in(str);
     REQUIRE(str == ""s);
 }
+#endif
 
+#if defined(PDSTRUT_CHAR_WCHAR)
 TEST_CASE("rtrim_in wstring tests", "[strut][rtrim_in][wstring][basic]")
 {
     std::wstring str{L"abc"s};
@@ -279,7 +298,9 @@ TEST_CASE("rtrim_in wstring tests", "[strut][rtrim_in][wstring][basic]")
     rtrim_in(str);
     REQUIRE(str == L""s);
 }
+#endif
 
+#if defined(PDSTRUT_CHAR_U16CHAR)
 TEST_CASE("rtrim_in u16string tests", "[strut][rtrim_in][u16string][basic]")
 {
     std::u16string str{u"abc"s};
@@ -302,7 +323,9 @@ TEST_CASE("rtrim_in u16string tests", "[strut][rtrim_in][u16string][basic]")
     rtrim_in(str);
     REQUIRE(str == u""s);
 }
+#endif
 
+#if defined(PDSTRUT_CHAR_U32CHAR)
 TEST_CASE("rtrim_in u32string tests", "[strut][rtrim_in][u32string][basic]")
 {
     std::u32string str{U"abc"s};
@@ -325,7 +348,9 @@ TEST_CASE("rtrim_in u32string tests", "[strut][rtrim_in][u32string][basic]")
     rtrim_in(str);
     REQUIRE(str == U""s);
 }
+#endif
 
+#if defined(PDSTRUT_CHAR_CHAR)
 TEST_CASE("trim_in string tests", "[strut][trim_in][string][basic]")
 {
     std::string str{"abc"s};
@@ -348,7 +373,9 @@ TEST_CASE("trim_in string tests", "[strut][trim_in][string][basic]")
     trim_in(str);
     REQUIRE(str == ""s);
 }
+#endif
 
+#if defined(PDSTRUT_CHAR_WCHAR)
 TEST_CASE("trim_in wstring tests", "[strut][trim_in][wstring][basic]")
 {
     std::wstring str{L"abc"s};
@@ -371,7 +398,9 @@ TEST_CASE("trim_in wstring tests", "[strut][trim_in][wstring][basic]")
     trim_in(str);
     REQUIRE(str == L""s);
 }
+#endif
 
+#if defined(PDSTRUT_CHAR_U16CHAR)
 TEST_CASE("trim_in u16string tests", "[strut][trim_in][u16string][basic]")
 {
     std::u16string str{u"abc"s};
@@ -394,7 +423,9 @@ TEST_CASE("trim_in u16string tests", "[strut][trim_in][u16string][basic]")
     trim_in(str);
     REQUIRE(str == u""s);
 }
+#endif
 
+#if defined(PDSTRUT_CHAR_U32CHAR)
 TEST_CASE("trim_in u32string tests", "[strut][trim_in][u32string][basic]")
 {
     std::u32string str{U"abc"s};
@@ -417,8 +448,10 @@ TEST_CASE("trim_in u32string tests", "[strut][trim_in][u32string][basic]")
     trim_in(str);
     REQUIRE(str == U""s);
 }
+#endif
 
 
+#if defined(PDSTRUT_CHAR_CHAR)
 TEST_CASE("ltrim string tests", "[strut][ltrim][string][basic]")
 {
     std::string_view str{"abc"sv};
@@ -446,7 +479,9 @@ TEST_CASE("ltrim string tests", "[strut][ltrim][string][basic]")
     REQUIRE(str == ""s);
     REQUIRE(str2 == ""s);
 }
+#endif
 
+#if defined(PDSTRUT_CHAR_WCHAR)
 TEST_CASE("ltrim wstring tests", "[strut][ltrim][wstring][basic]")
 {
     std::wstring_view str{L"abc"sv};
@@ -474,7 +509,9 @@ TEST_CASE("ltrim wstring tests", "[strut][ltrim][wstring][basic]")
     REQUIRE(str == L""sv);
     REQUIRE(str2 == L""sv);
 }
+#endif
 
+#if defined(PDSTRUT_CHAR_U16CHAR)
 TEST_CASE("ltrim u16string tests", "[strut][ltrim][u16string][basic]")
 {
     std::u16string_view str{u"abc"sv};
@@ -502,7 +539,9 @@ TEST_CASE("ltrim u16string tests", "[strut][ltrim][u16string][basic]")
     REQUIRE(str == u""sv);
     REQUIRE(str2 == u""sv);
 }
+#endif
 
+#if defined(PDSTRUT_CHAR_U32CHAR)
 TEST_CASE("ltrim u32string tests", "[strut][ltrim][u32string][basic]")
 {
     std::u32string_view str{U"abc"sv};
@@ -530,8 +569,10 @@ TEST_CASE("ltrim u32string tests", "[strut][ltrim][u32string][basic]")
     REQUIRE(str == U""sv);
     REQUIRE(str2 == U""sv);
 }
+#endif
 
 
+#if defined(PDSTRUT_CHAR_CHAR)
 TEST_CASE("rtrim string tests", "[strut][rtrim][string][basic]")
 {
     std::string_view str{"abc"s};
@@ -559,7 +600,9 @@ TEST_CASE("rtrim string tests", "[strut][rtrim][string][basic]")
     REQUIRE(str == ""s);
     REQUIRE(str2 == ""s);
 }
+#endif
 
+#if defined(PDSTRUT_CHAR_WCHAR)
 TEST_CASE("rtrim wstring tests", "[strut][rtrim][wstring][basic]")
 {
     std::wstring_view str{L"abc"sv};
@@ -587,7 +630,9 @@ TEST_CASE("rtrim wstring tests", "[strut][rtrim][wstring][basic]")
     REQUIRE(str == L""sv);
     REQUIRE(str2 == L""sv);
 }
+#endif
 
+#if defined(PDSTRUT_CHAR_U16CHAR)
 TEST_CASE("rtrim u16string tests", "[strut][rtrim][u16string][basic]")
 {
     std::u16string_view str{u"abc"sv};
@@ -615,7 +660,9 @@ TEST_CASE("rtrim u16string tests", "[strut][rtrim][u16string][basic]")
     REQUIRE(str == u""sv);
     REQUIRE(str2 == u""sv);
 }
+#endif
 
+#if defined(PDSTRUT_CHAR_U32CHAR)
 TEST_CASE("rtrim u32string tests", "[strut][rtrim][u32string][basic]")
 {
     std::u32string_view str{U"abc"sv};
@@ -643,8 +690,10 @@ TEST_CASE("rtrim u32string tests", "[strut][rtrim][u32string][basic]")
     REQUIRE(str == U""sv);
     REQUIRE(str2 == U""sv);
 }
+#endif
 
 
+#if defined(PDSTRUT_CHAR_CHAR)
 TEST_CASE("trim string tests", "[strut][trim][string][basic]")
 {
     std::string_view str{"abc"sv};
@@ -672,7 +721,9 @@ TEST_CASE("trim string tests", "[strut][trim][string][basic]")
     REQUIRE(str == ""sv);
     REQUIRE(str2 == ""sv);
 }
+#endif
 
+#if defined(PDSTRUT_CHAR_WCHAR)
 TEST_CASE("trim wstring tests", "[strut][trim][wstring][basic]")
 {
     std::wstring_view str{L"abc"sv};
@@ -700,7 +751,9 @@ TEST_CASE("trim wstring tests", "[strut][trim][wstring][basic]")
     REQUIRE(str == L""sv);
     REQUIRE(str2 == L""sv);
 }
+#endif
 
+#if defined(PDSTRUT_CHAR_U16CHAR)
 TEST_CASE("trim u16string tests", "[strut][trim][u16string][basic]")
 {
     std::u16string_view str{u"abc"sv};
@@ -728,7 +781,9 @@ TEST_CASE("trim u16string tests", "[strut][trim][u16string][basic]")
     REQUIRE(str == u""sv);
     REQUIRE(str2 == u""sv);
 }
+#endif
 
+#if defined(PDSTRUT_CHAR_U32CHAR)
 TEST_CASE("trim u32string tests", "[strut][trim][u32string][basic]")
 {
     std::u32string_view str{U"abc"sv};
@@ -756,3 +811,4 @@ TEST_CASE("trim u32string tests", "[strut][trim][u32string][basic]")
     REQUIRE(str == U""s);
     REQUIRE(str2 == U""s);
 }
+#endif
