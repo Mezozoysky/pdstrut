@@ -25,10 +25,12 @@ target_include_directories(${PROJECT_NAME}
     )
 
 set(HEADER_FILES
+    include/pd/strut/char_type.hpp
     include/pd/strut/strut.hpp
     )
 set(SOURCE_FILES
-    src/pd/strut/strut.cpp
+    src/pd/strut/char_type.cpp
+    # src/pd/strut/strut.cpp
     )
 
 target_sources(${PROJECT_NAME}

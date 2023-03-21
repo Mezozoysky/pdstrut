@@ -1,6 +1,7 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <pd/strut/strut.hpp>
+#include <pd/strut/char_type.hpp>
 
 using namespace pd::strut;
 using namespace std::literals;
