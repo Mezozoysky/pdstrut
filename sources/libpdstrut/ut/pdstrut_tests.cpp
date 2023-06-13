@@ -407,3 +407,36 @@ TEST_CASE("trim wstring tests", "[strut][trim][wstring][basic]")
     REQUIRE(str == L""sv);
     REQUIRE(str2 == L""sv);
 }
+
+
+#include <pd/strut/convert.hpp>
+
+
+TEST_CASE("utf-8 to utf-16 conversion correctness", "[strut][utf_8_to_16][string][wstring][basic]")
+{
+    std::string narrow{"Засада"s};
+    REQUIRE(narrow.length() == 12u);
+    REQUIRE((uchar)(narrow[0]) == 0xd0);
+    REQUIRE((uchar)(narrow[1]) == 0x97);
+
+    std::wstring wide{utf_8_to_16(narrow)};
+    REQUIRE(narrow == "Засада"s);
+    REQUIRE(wide == L"Засада"s);
+    REQUIRE(wide.length() == 6u);
+    REQUIRE(wide[0] == 0x0417);
+}
+
+
+TEST_CASE("utf-16 to utf-8 conversion correctness", "[strut][utf_16_to_8][string][wstring][basic]")
+{
+    std::wstring wide{L"Բարեւ"s};
+    REQUIRE(wide.length() == 5u);
+    REQUIRE(wide[0] == 0x0532);
+
+    std::string narrow{utf_16_to_8(wide)};
+    REQUIRE(wide == L"Բարեւ"s);
+    REQUIRE(narrow == "Բարեւ"s);
+    REQUIRE(narrow.length() == 10u);
+    REQUIRE((uchar)(narrow[0]) == 0xd4);
+    REQUIRE((uchar)(narrow[1]) == 0xb2);
+}
