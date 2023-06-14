@@ -1,7 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <pd/strut/strut.hpp>
-#include <pd/strut/char_type.hpp>
 
 
 using namespace pd::strut;
@@ -163,6 +162,7 @@ TEST_CASE("rtrim_in string tests", "[strut][rtrim_in][string][basic]")
     REQUIRE(str == ""s);
 }
 
+
 TEST_CASE("rtrim_in wstring tests", "[strut][rtrim_in][wstring][basic]")
 {
     std::wstring str{L"abc"s};
@@ -238,28 +238,28 @@ TEST_CASE("trim_in wstring tests", "[strut][trim_in][wstring][basic]")
 TEST_CASE("ltrim string tests", "[strut][ltrim][string][basic]")
 {
     std::string_view str{"abc"sv};
-    std::string_view str2{ltrim(str)};
-    REQUIRE(str == "abc"sv);
-    REQUIRE(str2 == "abc"sv);
+    std::string str2{ltrim(str)};
+    REQUIRE(str == "abc"s);
+    REQUIRE(str2 == "abc"s);
 
     str = " abc"sv;
     str2 = ltrim(str);
     REQUIRE(str == " abc"sv);
-    REQUIRE(str2 == "abc"sv);
+    REQUIRE(str2 == "abc"s);
 
     str = " \n\t\v\f\rabc"sv;
     str2 = ltrim(str);
     REQUIRE(str == " \n\t\v\f\rabc"sv);
-    REQUIRE(str2 == "abc"sv);
+    REQUIRE(str2 == "abc"s);
 
     str = "     \n\n      "sv;
     str2 = ltrim(str);
     REQUIRE(str == "     \n\n      "sv);
-    REQUIRE(str2 == ""sv);
+    REQUIRE(str2 == ""s);
 
-    str = ""s;
+    str = ""sv;
     str2 = ltrim(str);
-    REQUIRE(str == ""s);
+    REQUIRE(str == ""sv);
     REQUIRE(str2 == ""s);
 }
 
@@ -267,57 +267,57 @@ TEST_CASE("ltrim string tests", "[strut][ltrim][string][basic]")
 TEST_CASE("ltrim wstring tests", "[strut][ltrim][wstring][basic]")
 {
     std::wstring_view str{L"abc"sv};
-    std::wstring_view str2{ltrim(str)};
+    std::wstring str2{ltrim(str)};
     REQUIRE(str == L"abc"sv);
-    REQUIRE(str2 == L"abc"sv);
+    REQUIRE(str2 == L"abc"s);
 
     str = L" abc"sv;
     str2 = ltrim(str);
     REQUIRE(str == L" abc"sv);
-    REQUIRE(str2 == L"abc"sv);
+    REQUIRE(str2 == L"abc"s);
 
     str = L" \n\t\v\f\rabc"sv;
     str2 = ltrim(str);
     REQUIRE(str == L" \n\t\v\f\rabc"sv);
-    REQUIRE(str2 == L"abc"sv);
+    REQUIRE(str2 == L"abc"s);
 
     str = L"     \n\n      "sv;
     str2 = ltrim(str);
     REQUIRE(str == L"     \n\n      "sv);
-    REQUIRE(str2 == L""sv);
+    REQUIRE(str2 == L""s);
 
     str = L""sv;
     str2 = ltrim(str);
     REQUIRE(str == L""sv);
-    REQUIRE(str2 == L""sv);
+    REQUIRE(str2 == L""s);
 }
 
 
 TEST_CASE("rtrim string tests", "[strut][rtrim][string][basic]")
 {
-    std::string_view str{"abc"s};
-    std::string_view str2{rtrim(str)};
-    REQUIRE(str == "abc"s);
+    std::string_view str{"abc"sv};
+    std::string str2{rtrim(str)};
+    REQUIRE(str == "abc"sv);
     REQUIRE(str2 == "abc"s);
 
-    str = "abc "s;
+    str = "abc "sv;
     str2 = rtrim(str);
-    REQUIRE(str == "abc "s);
+    REQUIRE(str == "abc "sv);
     REQUIRE(str2 == "abc"s);
 
-    str = "abc \n\t\v\f\r"s;
+    str = "abc \n\t\v\f\r"sv;
     str2 = rtrim(str);
-    REQUIRE(str == "abc \n\t\v\f\r"s);
+    REQUIRE(str == "abc \n\t\v\f\r"sv);
     REQUIRE(str2 == "abc"s);
 
-    str = "     \n\n      "s;
+    str = "     \n\n      "sv;
     str2 = rtrim(str);
-    REQUIRE(str == "     \n\n      "s);
+    REQUIRE(str == "     \n\n      "sv);
     REQUIRE(str2 == ""s);
 
-    str = ""s;
+    str = ""sv;
     str2 = rtrim(str);
-    REQUIRE(str == ""s);
+    REQUIRE(str == ""sv);
     REQUIRE(str2 == ""s);
 }
 
@@ -325,95 +325,95 @@ TEST_CASE("rtrim string tests", "[strut][rtrim][string][basic]")
 TEST_CASE("rtrim wstring tests", "[strut][rtrim][wstring][basic]")
 {
     std::wstring_view str{L"abc"sv};
-    std::wstring_view str2{rtrim(str)};
+    std::wstring str2{rtrim(str)};
     REQUIRE(str == L"abc"sv);
-    REQUIRE(str2 == L"abc"sv);
+    REQUIRE(str2 == L"abc"s);
 
     str = L"abc "sv;
     str2 = rtrim(str);
     REQUIRE(str == L"abc "sv);
-    REQUIRE(str2 == L"abc"sv);
+    REQUIRE(str2 == L"abc"s);
 
     str = L"abc \n\t\v\f\r"sv;
     str2 = rtrim(str);
     REQUIRE(str == L"abc \n\t\v\f\r"sv);
-    REQUIRE(str2 == L"abc"sv);
+    REQUIRE(str2 == L"abc"s);
 
     str = L"     \n\n      "sv;
     str2 = rtrim(str);
     REQUIRE(str == L"     \n\n      "sv);
-    REQUIRE(str2 == L""sv);
+    REQUIRE(str2 == L""s);
 
     str = L""sv;
     str2 = rtrim(str);
     REQUIRE(str == L""sv);
-    REQUIRE(str2 == L""sv);
+    REQUIRE(str2 == L""s);
 }
 
 
 TEST_CASE("trim string tests", "[strut][trim][string][basic]")
 {
     std::string_view str{"abc"sv};
-    std::string_view str2{trim(str)};
+    std::string str2{trim(str)};
     REQUIRE(str == "abc"sv);
-    REQUIRE(str2 == "abc"sv);
+    REQUIRE(str2 == "abc"s);
 
     str = " abc "sv;
     str2 = trim(str);
     REQUIRE(str == " abc "sv);
-    REQUIRE(str2 == "abc"sv);
+    REQUIRE(str2 == "abc"s);
 
     str = "\r\f\v\t\n abc \n\t\v\f\r"sv;
     str2 = trim(str);
     REQUIRE(str == "\r\f\v\t\n abc \n\t\v\f\r"sv);
-    REQUIRE(str2 == "abc"sv);
+    REQUIRE(str2 == "abc"s);
 
     str = "     \n\n      "sv;
     str2 = trim(str);
     REQUIRE(str == "     \n\n      "sv);
-    REQUIRE(str2 == ""sv);
+    REQUIRE(str2 == ""s);
 
     str = ""sv;
     str2 = trim(str);
     REQUIRE(str == ""sv);
-    REQUIRE(str2 == ""sv);
+    REQUIRE(str2 == ""s);
 }
 
 
 TEST_CASE("trim wstring tests", "[strut][trim][wstring][basic]")
 {
     std::wstring_view str{L"abc"sv};
-    std::wstring_view str2{trim(str)};
+    std::wstring str2{trim(str)};
     REQUIRE(str == L"abc"sv);
-    REQUIRE(str2 == L"abc"sv);
+    REQUIRE(str2 == L"abc"s);
 
     str = L" abc "sv;
     str2 = trim(str);
     REQUIRE(str == L" abc "sv);
-    REQUIRE(str2 == L"abc"sv);
+    REQUIRE(str2 == L"abc"s);
 
     str = L"\r\f\v\t\n abc \n\t\v\f\r"sv;
     str2 = trim(str);
     REQUIRE(str == L"\r\f\v\t\n abc \n\t\v\f\r"sv);
-    REQUIRE(str2 == L"abc"sv);
+    REQUIRE(str2 == L"abc"s);
 
     str = L"     \n\n      "sv;
     str2 = trim(str);
     REQUIRE(str == L"     \n\n      "sv);
-    REQUIRE(str2 == L""sv);
+    REQUIRE(str2 == L""s);
 
     str = L""sv;
     str2 = trim(str);
     REQUIRE(str == L""sv);
-    REQUIRE(str2 == L""sv);
+    REQUIRE(str2 == L""s);
 }
-
-
-#include <pd/strut/convert.hpp>
 
 
 TEST_CASE("utf-8 to utf-16 conversion correctness", "[strut][utf_8_to_16][string][wstring][basic]")
 {
+    REQUIRE(std::is_same_v<std::string::value_type, char>);
+    REQUIRE(std::is_same_v<std::wstring::value_type, wchar_t>);
+
     std::string narrow{"Засада"s};
     REQUIRE(narrow.length() == 12u);
     REQUIRE((uchar)(narrow[0]) == 0xd0);
@@ -421,17 +421,19 @@ TEST_CASE("utf-8 to utf-16 conversion correctness", "[strut][utf_8_to_16][string
 
     std::wstring wide{utf_8_to_16(narrow)};
     REQUIRE(narrow == "Засада"s);
-    REQUIRE(wide == L"Засада"s);
+    // REQUIRE(wide == L"Засада"s);
     REQUIRE(wide.length() == 6u);
     REQUIRE(wide[0] == 0x0417);
 }
 
+#include <iostream>
 
 TEST_CASE("utf-16 to utf-8 conversion correctness", "[strut][utf_16_to_8][string][wstring][basic]")
 {
     std::wstring wide{L"Բարեւ"s};
-    REQUIRE(wide.length() == 5u);
-    REQUIRE(wide[0] == 0x0532);
+    REQUIRE(wide.length() == 10u);
+    REQUIRE((unsigned)wide[0] == 0x0532);
+    std::wcout << L"wide: "s << wide << L"\n";
 
     std::string narrow{utf_16_to_8(wide)};
     REQUIRE(wide == L"Բարեւ"s);

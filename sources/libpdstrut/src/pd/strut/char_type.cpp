@@ -1,5 +1,5 @@
 #include <pd/strut/char_type.hpp>
-#include <cstdint>
+#include <cstdlib>
 
 
 namespace pd::strut
