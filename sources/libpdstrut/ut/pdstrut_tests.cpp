@@ -1,7 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <pd/strut/strut.hpp>
-#include <pd/strut/char_type.hpp>
 
 
 using namespace pd::strut;
@@ -407,9 +406,6 @@ TEST_CASE("trim wstring tests", "[strut][trim][wstring][basic]")
     REQUIRE(str == L""sv);
     REQUIRE(str2 == L""sv);
 }
-
-
-#include <pd/strut/convert.hpp>
 
 
 TEST_CASE("utf-8 to utf-16 conversion correctness", "[strut][utf_8_to_16][string][wstring][basic]")

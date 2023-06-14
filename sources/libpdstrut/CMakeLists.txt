@@ -26,6 +26,7 @@ target_include_directories(${PROJECT_NAME}
 
 set(HEADER_FILES
     include/pd/strut/char_type.hpp
+    include/pd/strut/transform.hpp
     include/pd/strut/convert.hpp
     include/pd/strut/strut.hpp
     )
