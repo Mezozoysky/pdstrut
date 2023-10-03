@@ -32,33 +32,101 @@ void trim_in(std::basic_string<CharT> & str)
 
 
 template<typename CharT>
-std::basic_string<CharT> ltrim(std::basic_string_view<CharT> const & str)
+std::basic_string<CharT> ltrim(CharT const * str,
+                               std::size_t length = std::numeric_limits<std::size_t>::max())
 {
-    auto it = std::find_if_not(str.begin(), str.end(), is_whitespace<CharT>);
-    if (it == str.end())
+    if (length == std::numeric_limits<std::size_t>::max())
+    {
+        length = std::char_traits<CharT>::length(str);
+    }
+    if (length == 0u)
     {
         return {};
     }
-    return {it, str.end()};
+    std::size_t idx{0u};
+    for (; idx < length; ++idx)
+    {
+        if (!is_whitespace<CharT>(str[idx]))
+        {
+            break;
+        }
+    }
+    return {str + idx, length - idx};
+}
+
+
+template<typename CharT>
+std::basic_string<CharT> ltrim(std::basic_string_view<CharT> str)
+{
+    return ltrim(str.data(), str.length());
+}
+
+
+template<typename CharT>
+std::basic_string<CharT> ltrim(std::basic_string<CharT> str)
+{
+    return ltrim(str.data(), str.length());
+}
+
+
+template<typename CharT>
+std::basic_string<CharT> rtrim(CharT const * str,
+                               std::size_t length = std::numeric_limits<std::size_t>::max())
+{
+    if (length == std::numeric_limits<std::size_t>::max())
+    {
+        length = std::char_traits<CharT>::length(str);
+    }
+    if (length == 0u)
+    {
+        return {};
+    }
+    std::size_t idx{length - 1u};
+    for (; idx >= 0u; --idx)
+    {
+        if (!is_whitespace<CharT>(str[idx]))
+        {
+            break;
+        }
+    }
+    return {str, idx + 1u};
 }
 
 
 template<typename CharT>
 std::basic_string<CharT> rtrim(std::basic_string_view<CharT> str)
 {
-    auto it = std::find_if_not(str.rbegin(), str.rend(), is_whitespace<CharT>);
-    if (it == str.rend())
-    {
-        return {};
-    }
-    return {str.begin(), it.base()};
+    return rtrim(str.data(), str.length());
+}
+
+
+template<typename CharT>
+std::basic_string<CharT> rtrim(std::basic_string<CharT> str)
+{
+    return rtrim(str.data(), str.length());
+}
+
+
+template<typename CharT>
+std::basic_string<CharT> trim(CharT const * str,
+                              std::size_t length = std::numeric_limits<std::size_t>::max())
+{
+    std::basic_string<CharT> tmp{ltrim(str, length)};
+    tmp = rtrim(tmp.data(), tmp.length());
+    return tmp;
+}
+
+template<typename CharT>
+std::basic_string<CharT> trim(std::basic_string<CharT> str)
+{
+    return trim(str.data(), str.length());
 }
 
 
 template<typename CharT>
 std::basic_string<CharT> trim(std::basic_string_view<CharT> str)
 {
-    return rtrim({ltrim(str)});
+    return trim(str.data(), str.length());
 }
 
 } // namespace pd::strut

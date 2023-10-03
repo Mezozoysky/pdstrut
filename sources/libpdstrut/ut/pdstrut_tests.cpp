@@ -1,6 +1,7 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include <pd/strut/strut.hpp>
+#include <fstream>
 
 
 using namespace pd::strut;
@@ -237,174 +238,414 @@ TEST_CASE("trim_in wstring tests", "[strut][trim_in][wstring][basic]")
 
 TEST_CASE("ltrim string tests", "[strut][ltrim][string][basic]")
 {
-    std::string_view str{"abc"sv};
+    std::string str{"abc"s};
     std::string str2{ltrim(str)};
     REQUIRE(str == "abc"s);
     REQUIRE(str2 == "abc"s);
 
-    str = " abc"sv;
+    std::string_view strv{"abc"sv};
     str2 = ltrim(str);
-    REQUIRE(str == " abc"sv);
+    REQUIRE(strv.compare("abc"sv) == 0);
     REQUIRE(str2 == "abc"s);
 
-    str = " \n\t\v\f\rabc"sv;
-    str2 = ltrim(str);
-    REQUIRE(str == " \n\t\v\f\rabc"sv);
+    str2 = ltrim("abc");
     REQUIRE(str2 == "abc"s);
 
-    str = "     \n\n      "sv;
+    str = " abc"s;
     str2 = ltrim(str);
-    REQUIRE(str == "     \n\n      "sv);
+    REQUIRE(str == " abc"s);
+    REQUIRE(str2 == "abc"s);
+
+    strv = " abc"sv;
+    str2 = ltrim(strv);
+    REQUIRE(strv.compare(" abc"sv) == 0);
+    REQUIRE(str2 == "abc"s);
+
+    str2 = ltrim(" abc");
+    REQUIRE(str2 == "abc"s);
+
+    str = " \n\t\v\f\rabc"s;
+    str2 = ltrim(str);
+    REQUIRE(str == " \n\t\v\f\rabc"s);
+    REQUIRE(str2 == "abc"s);
+
+    strv = " \n\t\v\f\rabc"sv;
+    str2 = ltrim(strv);
+    REQUIRE(strv.compare(" \n\t\v\f\rabc"sv) == 0);
+    REQUIRE(str2 == "abc"s);
+
+    str2 = ltrim(" \n\t\v\f\rabc");
+    REQUIRE(str2 == "abc"s);
+
+    str = "     \n\n      "s;
+    str2 = ltrim(str);
+    REQUIRE(str == "     \n\n      "s);
     REQUIRE(str2 == ""s);
 
-    str = ""sv;
+    strv = "     \n\n      "sv;
+    str2 = ltrim(strv);
+    REQUIRE(strv.compare("     \n\n      "sv) == 0);
+    REQUIRE(str2 == ""s);
+
+    str2 = ltrim("     \n\n     ");
+    REQUIRE(str2 == ""s);
+
+    str = ""s;
     str2 = ltrim(str);
-    REQUIRE(str == ""sv);
+    REQUIRE(str == ""s);
+    REQUIRE(str2 == ""s);
+
+    strv = ""sv;
+    str2 = ltrim(strv);
+    REQUIRE(strv.compare(""sv) == 0);
+    REQUIRE(str2 == ""s);
+
+    str2 = ltrim("");
     REQUIRE(str2 == ""s);
 }
 
 
 TEST_CASE("ltrim wstring tests", "[strut][ltrim][wstring][basic]")
 {
-    std::wstring_view str{L"abc"sv};
+    std::wstring str{L"abc"s};
     std::wstring str2{ltrim(str)};
-    REQUIRE(str == L"abc"sv);
+    REQUIRE(str == L"abc"s);
     REQUIRE(str2 == L"abc"s);
 
-    str = L" abc"sv;
-    str2 = ltrim(str);
-    REQUIRE(str == L" abc"sv);
+    std::wstring_view strv{L"abc"sv};
+    str2 = ltrim(strv);
+    REQUIRE(strv.compare(L"abc"sv) == 0);
     REQUIRE(str2 == L"abc"s);
 
-    str = L" \n\t\v\f\rabc"sv;
-    str2 = ltrim(str);
-    REQUIRE(str == L" \n\t\v\f\rabc"sv);
+    str2 = ltrim(L"abc");
     REQUIRE(str2 == L"abc"s);
 
-    str = L"     \n\n      "sv;
+    str = L" abc"s;
     str2 = ltrim(str);
-    REQUIRE(str == L"     \n\n      "sv);
+    REQUIRE(str == L" abc"s);
+    REQUIRE(str2 == L"abc"s);
+
+    strv = L" abc"sv;
+    str2 = ltrim(strv);
+    REQUIRE(strv.compare(L" abc"sv) == 0);
+    REQUIRE(str2 == L"abc"s);
+
+    str2 = ltrim(L" abc");
+    REQUIRE(str2 == L"abc"s);
+
+    str = L" \n\t\v\f\rabc"s;
+    str2 = ltrim(str);
+    REQUIRE(str == L" \n\t\v\f\rabc"s);
+    REQUIRE(str2 == L"abc"s);
+
+    strv = L" \n\t\v\f\rabc"sv;
+    str2 = ltrim(strv);
+    REQUIRE(strv.compare(L" \n\t\v\f\rabc"sv) == 0);
+    REQUIRE(str2 == L"abc"s);
+
+    str2 = ltrim(L" \n\t\v\f\rabc");
+    REQUIRE(str2 == L"abc"s);
+
+    str = L"     \n\n      "s;
+    str2 = ltrim(str);
+    REQUIRE(str == L"     \n\n      "s);
     REQUIRE(str2 == L""s);
 
-    str = L""sv;
+    strv = L"     \n\n      "sv;
+    str2 = ltrim(strv);
+    REQUIRE(strv.compare(L"     \n\n      "sv) == 0);
+    REQUIRE(str2 == L""s);
+
+    str2 = ltrim(L"     \n\n     ");
+    REQUIRE(str2 == L""s);
+
+    str = L""s;
     str2 = ltrim(str);
-    REQUIRE(str == L""sv);
+    REQUIRE(str == L""s);
+    REQUIRE(str2 == L""s);
+
+    strv = L""sv;
+    str2 = ltrim(strv);
+    REQUIRE(strv.compare(L""sv) == 0);
+    REQUIRE(str2 == L""s);
+
+    str2 = ltrim(L"");
     REQUIRE(str2 == L""s);
 }
 
 
 TEST_CASE("rtrim string tests", "[strut][rtrim][string][basic]")
 {
-    std::string_view str{"abc"sv};
+    std::string str{"abc"s};
     std::string str2{rtrim(str)};
-    REQUIRE(str == "abc"sv);
+    REQUIRE(str == "abc"s);
     REQUIRE(str2 == "abc"s);
 
-    str = "abc "sv;
-    str2 = rtrim(str);
-    REQUIRE(str == "abc "sv);
+    std::string_view strv{"abc"sv};
+    str2 = rtrim(strv);
+    REQUIRE(strv.compare("abc"sv) == 0);
     REQUIRE(str2 == "abc"s);
 
-    str = "abc \n\t\v\f\r"sv;
-    str2 = rtrim(str);
-    REQUIRE(str == "abc \n\t\v\f\r"sv);
+    str2 = rtrim("abc");
     REQUIRE(str2 == "abc"s);
 
-    str = "     \n\n      "sv;
+    str = "abc "s;
     str2 = rtrim(str);
-    REQUIRE(str == "     \n\n      "sv);
+    REQUIRE(str == "abc "s);
+    REQUIRE(str2 == "abc"s);
+
+    strv = "abc "sv;
+    str2 = rtrim(strv);
+    REQUIRE(strv.compare("abc "sv) == 0);
+    REQUIRE(str2 == "abc"s);
+
+    str2 = rtrim("abc ");
+    REQUIRE(str2 == "abc"s);
+
+    str = "abc \n\t\v\f\r"s;
+    str2 = rtrim(str);
+    REQUIRE(str == "abc \n\t\v\f\r"s);
+    REQUIRE(str2 == "abc"s);
+
+    strv = "abc \n\t\v\f\r"sv;
+    str2 = rtrim(strv);
+    REQUIRE(strv.compare("abc \n\t\v\f\r"sv) == 0);
+    REQUIRE(str2 == "abc"s);
+
+    str2 = rtrim("abc \n\t\v\f\r");
+    REQUIRE(str2 == "abc"s);
+
+    str = "     \n\n      "s;
+    str2 = rtrim(str);
+    REQUIRE(str == "     \n\n      "s);
     REQUIRE(str2 == ""s);
 
-    str = ""sv;
+    strv = "     \n\n      "sv;
+    str2 = rtrim(strv);
+    REQUIRE(strv.compare("     \n\n      "sv) == 0);
+    REQUIRE(str2 == ""s);
+
+    str2 = rtrim("     \n\n     ");
+    REQUIRE(str2 == ""s);
+
+    str = ""s;
     str2 = rtrim(str);
-    REQUIRE(str == ""sv);
+    REQUIRE(str == ""s);
+    REQUIRE(str2 == ""s);
+
+    strv = ""sv;
+    str2 = rtrim(strv);
+    REQUIRE(strv.compare(""sv) == 0);
+    REQUIRE(str2 == ""s);
+
+    str2 = rtrim("");
     REQUIRE(str2 == ""s);
 }
 
 
 TEST_CASE("rtrim wstring tests", "[strut][rtrim][wstring][basic]")
 {
-    std::wstring_view str{L"abc"sv};
+    std::wstring str{L"abc"s};
     std::wstring str2{rtrim(str)};
-    REQUIRE(str == L"abc"sv);
+    REQUIRE(str == L"abc"s);
     REQUIRE(str2 == L"abc"s);
 
-    str = L"abc "sv;
-    str2 = rtrim(str);
-    REQUIRE(str == L"abc "sv);
+    std::wstring_view strv{L"abc"sv};
+    str2 = rtrim(strv);
+    REQUIRE(strv.compare(L"abc"sv) == 0);
     REQUIRE(str2 == L"abc"s);
 
-    str = L"abc \n\t\v\f\r"sv;
-    str2 = rtrim(str);
-    REQUIRE(str == L"abc \n\t\v\f\r"sv);
+    str2 = rtrim(L"abc");
     REQUIRE(str2 == L"abc"s);
 
-    str = L"     \n\n      "sv;
+    str = L"abc "s;
     str2 = rtrim(str);
-    REQUIRE(str == L"     \n\n      "sv);
+    REQUIRE(str == L"abc "s);
+    REQUIRE(str2 == L"abc"s);
+
+    strv = L"abc "sv;
+    str2 = rtrim(strv);
+    REQUIRE(strv.compare(L"abc "sv) == 0);
+    REQUIRE(str2 == L"abc"s);
+
+    str2 = rtrim(L"abc ");
+    REQUIRE(str2 == L"abc"s);
+
+    str = L"abc \n\t\v\f\r"s;
+    str2 = rtrim(str);
+    REQUIRE(str == L"abc \n\t\v\f\r"s);
+    REQUIRE(str2 == L"abc"s);
+
+    strv = L"abc \n\t\v\f\r"sv;
+    str2 = rtrim(strv);
+    REQUIRE(strv.compare(L"abc \n\t\v\f\r"sv) == 0);
+    REQUIRE(str2 == L"abc"s);
+
+    str2 = rtrim(L"abc \n\t\v\f\r");
+    REQUIRE(str2 == L"abc"s);
+
+    str = L"     \n\n      "s;
+    str2 = rtrim(str);
+    REQUIRE(str == L"     \n\n      "s);
     REQUIRE(str2 == L""s);
 
-    str = L""sv;
+    strv = L"     \n\n      "sv;
+    str2 = rtrim(strv);
+    REQUIRE(strv.compare(L"     \n\n      "sv) == 0);
+    REQUIRE(str2 == L""s);
+
+    str2 = rtrim(L"     \n\n     ");
+    REQUIRE(str2 == L""s);
+
+    str = L""s;
     str2 = rtrim(str);
-    REQUIRE(str == L""sv);
+    REQUIRE(str == L""s);
+    REQUIRE(str2 == L""s);
+
+    strv = L""sv;
+    str2 = rtrim(strv);
+    REQUIRE(strv.compare(L""sv) == 0);
+    REQUIRE(str2 == L""s);
+
+    str2 = rtrim(L"");
     REQUIRE(str2 == L""s);
 }
 
 
 TEST_CASE("trim string tests", "[strut][trim][string][basic]")
 {
-    std::string_view str{"abc"sv};
+    std::string str{"abc"s};
     std::string str2{trim(str)};
-    REQUIRE(str == "abc"sv);
+    REQUIRE(str == "abc"s);
     REQUIRE(str2 == "abc"s);
 
-    str = " abc "sv;
-    str2 = trim(str);
-    REQUIRE(str == " abc "sv);
+    std::string_view strv{"abc"sv};
+    str2 = trim(strv);
+    REQUIRE(strv.compare("abc"sv) == 0);
     REQUIRE(str2 == "abc"s);
 
-    str = "\r\f\v\t\n abc \n\t\v\f\r"sv;
-    str2 = trim(str);
-    REQUIRE(str == "\r\f\v\t\n abc \n\t\v\f\r"sv);
+    str2 = trim("abc");
     REQUIRE(str2 == "abc"s);
 
-    str = "     \n\n      "sv;
+    str = " abc "s;
     str2 = trim(str);
-    REQUIRE(str == "     \n\n      "sv);
+    REQUIRE(str == " abc "s);
+    REQUIRE(str2 == "abc"s);
+
+    strv = " abc "sv;
+    str2 = trim(strv);
+    REQUIRE(strv.compare(" abc "sv) == 0);
+    REQUIRE(str2 == "abc"s);
+
+    str2 = trim(" abc ");
+    REQUIRE(str2 == "abc");
+
+    str = "\r\f\v\t\n abc \n\t\v\f\r"s;
+    str2 = trim(str);
+    REQUIRE(str == "\r\f\v\t\n abc \n\t\v\f\r"s);
+    REQUIRE(str2 == "abc"s);
+
+    strv = "\r\f\v\t\n abc \n\t\v\f\r"sv;
+    str2 = trim(strv);
+    REQUIRE(strv.compare("\r\f\v\t\n abc \n\t\v\f\r"sv) == 0);
+    REQUIRE(str2 == "abc"s);
+
+    str2 = trim("\r\f\v\t\n abc \n\t\v\f\r");
+    REQUIRE(str2 == "abc"s);
+
+    str = "     \n\n      "s;
+    str2 = trim(str);
+    REQUIRE(str == "     \n\n      "s);
     REQUIRE(str2 == ""s);
 
-    str = ""sv;
+    strv = "     \n\n      "sv;
+    str2 = trim(strv);
+    REQUIRE(strv.compare("     \n\n      "sv) == 0);
+    REQUIRE(str2 == ""s);
+
+    str2 = trim("     \n\n      ");
+    REQUIRE(str2 == ""s);
+
+    str = ""s;
     str2 = trim(str);
-    REQUIRE(str == ""sv);
+    REQUIRE(str == ""s);
+    REQUIRE(str2 == ""s);
+
+    strv = ""sv;
+    str2 = trim(strv);
+    REQUIRE(strv.compare(""sv) == 0);
+    REQUIRE(str2 == ""s);
+
+    str2 = trim("");
     REQUIRE(str2 == ""s);
 }
 
 
 TEST_CASE("trim wstring tests", "[strut][trim][wstring][basic]")
 {
-    std::wstring_view str{L"abc"sv};
+    std::wstring str{L"abc"s};
     std::wstring str2{trim(str)};
-    REQUIRE(str == L"abc"sv);
+    REQUIRE(str == L"abc"s);
     REQUIRE(str2 == L"abc"s);
 
-    str = L" abc "sv;
-    str2 = trim(str);
-    REQUIRE(str == L" abc "sv);
+    std::wstring_view strv{L"abc"sv};
+    str2 = trim(strv);
+    REQUIRE(strv.compare(L"abc"sv) == 0);
     REQUIRE(str2 == L"abc"s);
 
-    str = L"\r\f\v\t\n abc \n\t\v\f\r"sv;
+    str2 = trim(L"abc");
+    REQUIRE(str2 == L"abc");
+
+    str = L" abc "s;
     str2 = trim(str);
-    REQUIRE(str == L"\r\f\v\t\n abc \n\t\v\f\r"sv);
+    REQUIRE(str == L" abc "s);
     REQUIRE(str2 == L"abc"s);
 
-    str = L"     \n\n      "sv;
+    strv = L" abc "sv;
+    str2 = trim(strv);
+    REQUIRE(strv.compare(L" abc "sv) == 0);
+    REQUIRE(str2 == L"abc"s);
+
+    str2 = trim(L" abc ");
+    REQUIRE(str2 == L"abc"s);
+
+    str = L"\r\f\v\t\n abc \n\t\v\f\r"s;
     str2 = trim(str);
-    REQUIRE(str == L"     \n\n      "sv);
+    REQUIRE(str == L"\r\f\v\t\n abc \n\t\v\f\r"s);
+    REQUIRE(str2 == L"abc"s);
+
+    strv = L"\r\f\v\t\n abc \n\t\v\f\r"sv;
+    str2 = trim(strv);
+    REQUIRE(strv.compare(L"\r\f\v\t\n abc \n\t\v\f\r"sv) == 0);
+    REQUIRE(str2 == L"abc"s);
+
+    str2 = trim(L"\r\f\v\t\n abc \n\t\v\f\r");
+    REQUIRE(str2 == L"abc"s);
+
+    str = L"     \n\n      "s;
+    str2 = trim(str);
+    REQUIRE(str == L"     \n\n      "s);
     REQUIRE(str2 == L""s);
 
-    str = L""sv;
+    strv = L"     \n\n      "sv;
+    str2 = trim(strv);
+    REQUIRE(strv.compare(L"     \n\n      "sv) == 0);
+    REQUIRE(str2 == L""s);
+
+    str2 = trim(L"     \n\n      ");
+    REQUIRE(str2 == L""s);
+
+    str = L""s;
     str2 = trim(str);
-    REQUIRE(str == L""sv);
+    REQUIRE(str == L""s);
+    REQUIRE(str2 == L""s);
+
+    strv = L""sv;
+    str2 = trim(strv);
+    REQUIRE(strv.compare(L""sv) == 0);
+    REQUIRE(str2 == L""s);
+
+    str2 = trim(L"");
     REQUIRE(str2 == L""s);
 }
 
